@@ -5,6 +5,7 @@ type KeyboardProps = {
   guessLetter?: (letter: string) => void;
   guessedLetters?: string[];
   currentWord?: string;
+  isGameOver: boolean;
 };
 
 function Keyboard({ ...props }: KeyboardProps) {
@@ -20,7 +21,8 @@ function Keyboard({ ...props }: KeyboardProps) {
             {
               "bg-green-400": isGuessed && isCorrect,
               "bg-red-400": isGuessed && !isCorrect,
-              "bg-amber-300 hover:bg-amber-400 cursor-pointer": !isGuessed,
+              "bg-amber-300 hover:bg-amber-400 cursor-pointer":
+                !isGuessed && !props.isGameOver,
             }
           );
 
@@ -29,7 +31,9 @@ function Keyboard({ ...props }: KeyboardProps) {
               key={letter}
               onClick={() => props.guessLetter && props.guessLetter(letter)}
               className={buttonClass}
-              disabled={isGuessed}
+              disabled={isGuessed || props.isGameOver}
+              aria-label={`Letter ${letter}`}
+              aria-disabled={isGuessed && props.isGameOver}
             >
               {letter.toUpperCase()}
             </button>

@@ -7,14 +7,20 @@ type StatusProps = {
   isGameWon: boolean;
   isGameLost: boolean;
   isGameOver: boolean;
+  isLastGuessIncorrect: boolean;
+  getFarewellMessage: string;
 };
 
 function Status({ ...props }: StatusProps) {
   const bannerClass = clsx(
-    "w-full p-4 my-4 text-center text-white rounded-md",
+    "w-full min-h-[90px] p-4 text-center text-white rounded-md",
     {
+      "bg-violet-500 border-2 border-dashed":
+        props.getFarewellMessage &&
+        props.isLastGuessIncorrect &&
+        !props.isGameOver,
       "bg-green-700": props.isGameWon,
-      "bg-red-700": props.isGameLost,
+      "bg-red-500": props.isGameLost,
     }
   );
 
@@ -32,7 +38,9 @@ function Status({ ...props }: StatusProps) {
             </p>
           </div>
         );
-      } else if (props.isGameLost) {
+      }
+
+      if (props.isGameLost) {
         return (
           <div>
             <h2 className="font-bold text-2xl">Game Over!</h2>
@@ -46,9 +54,19 @@ function Status({ ...props }: StatusProps) {
           </div>
         );
       }
-    } else {
-      null;
     }
+
+    if (props.getFarewellMessage && props.isLastGuessIncorrect) {
+      return (
+        <div>
+          <p className="text-2xl italic flex items-center justify-center text-md">
+            "{props.getFarewellMessage}"
+          </p>
+        </div>
+      );
+    }
+
+    return null;
   };
 
   return (
@@ -56,7 +74,9 @@ function Status({ ...props }: StatusProps) {
       {props.isGameWon && (
         <Confetti width={width} height={height} wind={0.025} />
       )}
-      <section className={bannerClass}>{renderGameStatus()}</section>
+      <section className={bannerClass} aria-live="polite" role="status">
+        {renderGameStatus()}
+      </section>
     </>
   );
 }
