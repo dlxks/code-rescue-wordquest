@@ -7,7 +7,7 @@ import Status from "./components/Status";
 import WordDisplay from "./components/WordDisplay";
 import "./globals.css";
 import { languages } from "./data/languages";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getFarewellText, getRandomWord } from "./data/utils";
 
 export default function Home() {

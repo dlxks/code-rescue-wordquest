@@ -20,7 +20,7 @@ WordQuest is a hangman-style word guessing game with a programming twist. Player
 
 - **Frontend**: Next.js 15 with TypeScript
 - **Styling**: Tailwind CSS v4
-- **State Management**: React Hooks (useState, useEffect)
+- **State Management**: React Hooks (useState)
 - **Icons**: Iconify for consistent iconography
 - **Animations**: React Confetti for celebration effects
 - **Linting**: ESLint with Next.js configuration
